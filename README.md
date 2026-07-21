@@ -22,7 +22,7 @@ SKALA 학습 내용을 복습하고, 개인 Markdown 노트와 Velog·Notion·Ti
 Codex Plugin Marketplace에 이 저장소를 추가합니다.
 
 ```bash
-codex plugin marketplace add <owner>/<repository> --sparse .agents/plugins
+codex plugin marketplace add <owner>/<repository>
 codex plugin add skala-review@skala-review
 ```
 
