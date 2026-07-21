@@ -51,6 +51,22 @@ const claudeText = fs.readFileSync(path.join(claudeSkill, 'SKILL.md'), 'utf8');
 assert.match(codexText, /^---\nname: skala-review\ndescription: .+\n---/);
 assert.match(claudeText, /^---\nname: skala-review\ndescription: .+\ndisable-model-invocation: true\n---/);
 
+const workflow = fs.readFileSync(path.join(core, 'references', 'workflow.md'), 'utf8');
+for (const requiredRule of [
+  'Storage is never a gate',
+  'Do **not** ask about `SKALA-Review/`, settings, or reminders in the opening message.',
+  'Material intake and mode selection',
+  'Treat statements such as “저장 없이 진행” as a storage preference only.',
+  'Draft handoff and revision loop',
+  'This output is required even when the learner chose not to save a local note.'
+]) assert.ok(workflow.includes(requiredRule), `Missing workflow rule: ${requiredRule}`);
+
+for (const text of [codexText, claudeText]) {
+  assert.ok(text.includes('Read `references/workflow.md` before replying'));
+  assert.ok(text.includes('Never ask the learner to choose a note storage location in the opening message'));
+  assert.ok(text.includes('After a review, continue to the platform-draft handoff'));
+}
+
 const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'skala-review-'));
 execFileSync('node', [path.join(core, 'scripts', 'init-workspace.mjs'), temporaryRoot], { stdio: 'pipe' });
 const notesDirectory = path.join(temporaryRoot, 'SKALA-Review', 'notes');
@@ -63,4 +79,3 @@ assert.equal(listed[0].title, 'Transformer의 Q, K, V 다시 보기');
 fs.rmSync(temporaryRoot, { recursive: true, force: true });
 
 console.log('Validation passed: plugin, platform packages, and note scripts are consistent.');
-
