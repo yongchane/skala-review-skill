@@ -10,6 +10,7 @@ const repositoryRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url))
 const core = path.join(repositoryRoot, 'core');
 const codexSkill = path.join(repositoryRoot, 'plugins', 'skala-review', 'skills', 'skala-review');
 const claudeSkill = path.join(repositoryRoot, 'platforms', 'claude-code', 'skala-review');
+const webPlatform = path.join(repositoryRoot, 'platforms', 'web');
 
 function required(filePath) {
   assert.ok(fs.existsSync(filePath), `필수 파일이 없습니다: ${filePath}`);
@@ -30,6 +31,8 @@ for (const filePath of [
   path.join(codexSkill, 'SKILL.md'),
   path.join(codexSkill, 'agents', 'openai.yaml'),
   path.join(claudeSkill, 'SKILL.md'),
+  path.join(webPlatform, 'README.md'),
+  path.join(webPlatform, 'SKALA-REVIEW-WEB-INSTRUCTIONS.md'),
   path.join(repositoryRoot, 'plugins', 'skala-review', '.codex-plugin', 'plugin.json'),
   path.join(repositoryRoot, '.agents', 'plugins', 'marketplace.json')
 ]) required(filePath);
@@ -53,6 +56,69 @@ for (const directory of ['references', 'templates', 'scripts']) {
     }
   }
 }
+
+assert.equal(
+  hash(path.join(core, 'web', 'web-instructions.md')),
+  hash(path.join(webPlatform, 'SKALA-REVIEW-WEB-INSTRUCTIONS.md')),
+  '웹 공통 지침 배포본이 원본과 동기화되지 않았습니다.'
+);
+
+for (const name of ['skala-curriculum-map.md', 'output-profiles.md', 'note-schema.md']) {
+  const output = path.join(webPlatform, 'knowledge', name);
+  required(output);
+  assert.equal(
+    hash(path.join(core, 'references', name)),
+    hash(output),
+    `웹 지식 파일이 원본과 동기화되지 않았습니다: ${output}`
+  );
+}
+
+const webInstructions = fs.readFileSync(path.join(webPlatform, 'SKALA-REVIEW-WEB-INSTRUCTIONS.md'), 'utf8');
+for (const requiredRule of [
+  '질문은 반드시 한 번에 하나씩 묻고',
+  '다른 대화나 기기의 파일을 기억한다고 말하지 않는다.',
+  'Markdown 보관본도 만들어드릴까요?',
+  '이전 노트가 입력되면 전체 설명을 바로 보여주지 않는다.',
+  '외부 플랫폼에 로그인하거나 게시했다고 말하지 않는다.'
+]) assert.ok(webInstructions.includes(requiredRule), `웹 필수 진행 규칙이 없습니다: ${requiredRule}`);
+
+const webGuide = fs.readFileSync(path.join(webPlatform, 'README.md'), 'utf8');
+for (const platform of ['ChatGPT 웹', 'Gemini 웹', 'Claude 웹']) {
+  assert.ok(webGuide.includes(platform), `웹 사용 안내에 플랫폼이 없습니다: ${platform}`);
+}
+for (const requiredScopeGuide of [
+  '일반 채팅에 GitHub 링크나 지침 전달',
+  '현재 채팅에서만 적용',
+  '해당 Project 안의 채팅',
+  '로컬에서 제거하기 전까지 재사용',
+  '자동으로 바뀌지 않습니다'
+]) assert.ok(webGuide.includes(requiredScopeGuide), `웹 사용 안내에 적용 범위 설명이 없습니다: ${requiredScopeGuide}`);
+
+const readme = fs.readFileSync(path.join(repositoryRoot, 'README.md'), 'utf8');
+for (const requiredGuide of [
+  'platforms/web/README.md',
+  'platforms/web/SKALA-REVIEW-WEB-INSTRUCTIONS.md',
+  'ChatGPT 웹',
+  'Gemini 웹',
+  'Claude 웹',
+  '일반 채팅에 GitHub 링크나 지침 전달',
+  '현재 채팅에서만 적용',
+  '해당 Project 안의 채팅',
+  '로컬에서 제거하기 전까지 재사용',
+  '자동으로 바뀌지는 않습니다'
+]) assert.ok(readme.includes(requiredGuide), `README에 웹 사용 안내가 없습니다: ${requiredGuide}`);
+
+const contributing = fs.readFileSync(path.join(repositoryRoot, 'CONTRIBUTING.md'), 'utf8');
+for (const requiredContributionRule of [
+  'core/web/web-instructions.md',
+  '## Pull Request 작성 방법',
+  '### 변경 내용',
+  '### 변경 이유',
+  '### 확인 방법'
+]) assert.ok(
+  contributing.includes(requiredContributionRule),
+  `기여 가이드에 필수 안내가 없습니다: ${requiredContributionRule}`
+);
 
 const codexText = fs.readFileSync(path.join(codexSkill, 'SKILL.md'), 'utf8');
 const claudeText = fs.readFileSync(path.join(claudeSkill, 'SKILL.md'), 'utf8');
@@ -98,4 +164,4 @@ const missing = JSON.parse(execFileSync('node', [path.join(core, 'scripts', 'lis
 assert.equal(missing.length, 0);
 fs.rmSync(temporaryRoot, { recursive: true, force: true });
 
-console.log('검증 통과: 플러그인, 플랫폼별 배포본, 노트 스크립트가 일치합니다.');
+console.log('검증 통과: 플러그인, 에이전트·웹 배포본, 노트 스크립트가 일치합니다.');

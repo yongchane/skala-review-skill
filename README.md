@@ -1,6 +1,6 @@
 # SKALA Review Skill
 
-수업 내용을 완벽하게 정리하지 못해도 괜찮습니다. 생각나는 키워드, 끄적인 메모, 정리하다 만 내용만 보내면 AI가 한 번에 한 질문씩 복습을 도와주고, 그 과정을 Markdown 학습 노트와 Velog·Notion·Tistory용 초안으로 정리해 주는 Skill입니다.
+수업 내용을 완벽하게 정리하지 못해도 괜찮습니다. 생각나는 키워드, 끄적인 메모, 정리하다 만 내용만 보내면 AI가 한 번에 한 질문씩 복습을 도와주고, 그 과정을 Markdown 학습 노트와 Velog·Notion·Tistory용 초안으로 정리해 주는 복습 도구입니다. Codex·Claude Code뿐 아니라 ChatGPT·Gemini·Claude 웹에서도 사용할 수 있습니다.
 
 이 Skill은 자동 게시 도구가 아닙니다. 복습과 글 작성까지만 도와주며, 최종 게시 여부와 내용은 사용자가 직접 결정합니다.
 
@@ -22,15 +22,27 @@
 6. 복습한 내용을 Velog·Notion·Tistory·일반 Markdown 형식으로 정리합니다.
 7. 원하면 Markdown 노트로 저장하고, 나중에 날짜·제목·키워드로 찾아 회상 문제를 다시 풉니다.
 
-## 처음 사용할 때
+## 사용 환경 선택
 
-설치 후 새 대화에서 다음처럼 입력하면 됩니다.
+| 사용 환경 | 준비 방법 | 시작 문구 |
+|---|---|---|
+| Codex | Plugin Marketplace 설치 | `$skala-review SKALA 복습 시작` |
+| Claude Code | Skill 폴더 설치 | `/skala-review` |
+| ChatGPT 웹 | 맞춤 GPT 또는 Project에 웹 지침 복사 | `SKALA 복습 시작` |
+| Gemini 웹 | Gem에 웹 지침 복사 | `SKALA 복습 시작` |
+| Claude 웹 | Project 또는 웹 Skill에 지침 복사 | `SKALA 복습 시작` |
+
+터미널을 사용할 수 없다면 [웹 브라우저 사용 안내](platforms/web/README.md)를 따라 공통 복습 지침을 복사하면 됩니다.
+
+## 공통 복습 흐름
+
+준비를 마친 뒤 새 대화에서 환경에 맞는 시작 문구를 입력합니다. Codex에서는 다음처럼 명시적으로 호출하는 것이 가장 확실합니다.
 
 ```text
 $skala-review SKALA 복습 시작
 ```
 
-`$skala-review`를 붙이면 Codex가 이 Skill을 명시적으로 선택하므로 가장 확실합니다. Plugin 화면에 보이는 `SKALA Review` 시작 문구를 눌러도 됩니다.
+`$skala-review`를 붙이면 Codex가 이 Skill을 명시적으로 선택합니다. Plugin 화면에 보이는 `SKALA Review` 시작 문구를 눌러도 됩니다. 웹에서는 `$skala-review` 없이 `SKALA 복습 시작`이라고 입력합니다.
 
 `$skala-review`를 입력하기 어려운 환경이라면 다음처럼 목적을 함께 적어주세요.
 
@@ -84,7 +96,7 @@ attention은 중요한 단어에 집중하는 것 같음
 
 저장은 필수가 아닙니다. 복습과 플랫폼용 초안은 저장 위치를 정하지 않아도 받을 수 있습니다.
 
-복습이 끝난 뒤 저장에 동의하면 현재 작업 공간에 다음 구조가 만들어집니다.
+Codex 또는 Claude Code에서 복습이 끝난 뒤 저장에 동의하면 현재 작업 공간에 다음 구조가 만들어집니다.
 
 ```text
 SKALA-Review/
@@ -114,6 +126,8 @@ Skill은 저장된 정답을 바로 보여주지 않고 먼저 회상 질문을 
 
 노트는 AI의 내부 기억이 아니라 사용자가 선택한 로컬 폴더에 보관됩니다. 다른 작업 공간에서 다시 보려면 기존 `SKALA-Review/notes/` 경로를 알려주세요.
 
+웹에서는 AI가 로컬 폴더에 저장했다고 가정하지 않습니다. 최종 Markdown 보관본을 내려받거나 복사해 두고, 다음 복습 때 파일을 다시 첨부하거나 내용을 붙여 넣습니다. 이전 노트를 받으면 정답을 바로 보여주지 않고 회상 질문부터 시작하도록 웹 지침에 포함되어 있습니다.
+
 ## 플랫폼별 결과물
 
 - **Velog**: 제목과 Markdown 본문을 복사해 붙일 수 있게 제공합니다.
@@ -122,6 +136,35 @@ Skill은 저장된 정답을 바로 보여주지 않고 먼저 회상 질문을 
 - **일반 Markdown**: 특정 플랫폼에 종속되지 않는 `.md` 형식으로 제공합니다.
 
 Skill은 플랫폼에 로그인하거나 글을 자동으로 게시하지 않습니다. 사용자가 결과를 검토하고 직접 복사·수정·게시합니다.
+
+## 웹 브라우저에서 사용
+
+ChatGPT·Gemini·Claude 웹 사용자는 터미널 설치가 필요 없습니다.
+
+1. [웹 공통 복습 지침](platforms/web/SKALA-REVIEW-WEB-INSTRUCTIONS.md)을 엽니다.
+2. 전체 내용을 맞춤 GPT, ChatGPT Project, Gemini Gem 또는 Claude Project의 지침에 붙여 넣습니다.
+3. 필요하면 [`platforms/web/knowledge/`](platforms/web/knowledge/)의 공개 커리큘럼·출력 형식·노트 구조 파일을 지식 자료로 추가합니다.
+4. 새 대화에서 `SKALA 복습 시작`이라고 입력합니다.
+5. 복습이 끝나면 Markdown 보관본을 직접 저장하고, 다음 복습 때 다시 첨부합니다.
+
+### 웹 지침은 어디까지 유지되나요?
+
+웹의 일반 채팅에서 `이 스킬을 적용해줘`라고 말하거나 지침을 붙여 넣는 것만으로 계정에 영구 설치되지는 않습니다.
+
+| 적용 방식 | 유지 범위 |
+|---|---|
+| 일반 채팅에 GitHub 링크나 지침 전달 | 현재 채팅에서만 적용 |
+| ChatGPT Project instructions | 해당 Project 안의 채팅 |
+| 맞춤 GPT | 해당 GPT로 시작한 채팅 |
+| Gemini Gem | 해당 Gem으로 시작한 채팅 |
+| Claude Project 또는 웹 Skill | 해당 Project·Skill을 사용하는 채팅 |
+| Codex·Claude Code Skill 설치 | 로컬에서 제거하기 전까지 재사용 |
+
+일반 채팅 방식은 빠른 체험에 적합하지만, 새 채팅에서는 지침을 다시 전달해야 합니다. 계속 사용할 교육생에게는 Project·맞춤 GPT·Gem 등록을 권장합니다. 다만 이 설정도 계정 전체가 아니라 선택한 Project·GPT·Gem 안에서만 적용됩니다.
+
+GitHub의 웹 지침이 업데이트되어도 이미 등록한 Project·맞춤 GPT·Gem의 내용이 자동으로 바뀌지는 않습니다. 새 버전이 올라오면 [웹 공통 복습 지침](platforms/web/SKALA-REVIEW-WEB-INSTRUCTIONS.md)을 다시 복사해 기존 지침을 교체해 주세요.
+
+계정에서 맞춤 기능을 만들 수 없다면 일반 대화의 첫 메시지에 웹 공통 복습 지침을 붙여 넣어 현재 대화에서 사용할 수 있습니다. 서비스별 자세한 과정은 [웹 브라우저 사용 안내](platforms/web/README.md)를 확인해 주세요.
 
 ## Codex 설치
 
@@ -188,7 +231,7 @@ Claude Code에서 다음 명령으로 시작합니다.
 
 이 프로젝트는 [MIT 라이선스](LICENSE)로 제공됩니다. 누구나 라이선스 조건에 따라 사용, 수정, 배포하고 프로젝트 개선에 기여할 수 있습니다.
 
-오픈소스 기여가 처음이어도 괜찮습니다. 오탈자 수정, 더 쉬운 설명, 복습 흐름 개선, 새로운 템플릿, Codex·Claude Code 호환성 개선을 환영합니다.
+오픈소스 기여가 처음이어도 괜찮습니다. 오탈자 수정, 더 쉬운 설명, 복습 흐름 개선, 새로운 템플릿, Codex·Claude Code·ChatGPT·Gemini·Claude 웹 호환성 개선을 환영합니다.
 
 기여하는 기본 순서는 다음과 같습니다.
 
@@ -211,11 +254,11 @@ Claude Code에서 다음 명령으로 시작합니다.
 
 ## 개발 및 검증
 
-공통 워크플로와 템플릿은 `core/`에서 관리합니다. 수정 후 Codex와 Claude Code 배포본을 동기화하고 검증합니다.
+공통 워크플로와 템플릿은 `core/`에서 관리합니다. 웹 공통 지침은 `core/web/`에서 관리합니다. 수정 후 Codex·Claude Code·웹 배포본을 동기화하고 검증합니다.
 
 ```bash
 node tools/package-skill.mjs
 node tools/validate.mjs
 ```
 
-검증은 플러그인 구조, 배포본 동기화, Markdown 노트 형식, 날짜·제목·키워드 검색을 확인합니다.
+검증은 플러그인 구조, 에이전트·웹 배포본 동기화, 웹 필수 복습 규칙, Markdown 노트 형식, 날짜·제목·키워드 검색을 확인합니다.
