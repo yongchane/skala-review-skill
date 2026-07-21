@@ -28,6 +28,8 @@ codex plugin add skala-review@skala-review
 
 Codex Desktop 또는 CLI에서 Plugin 목록을 열어 `skala-review`를 설치한 뒤 **새 대화**에서 사용합니다.
 
+`<owner>/<repository>`에는 저장소 루트를 입력합니다. `.agents/plugins`는 marketplace 설정 파일이 있는 하위 폴더일 뿐이므로, 그 경로를 직접 등록하거나 `--sparse .agents/plugins`만 지정하면 플러그인 본체를 찾지 못할 수 있습니다.
+
 ```text
 SKALA 복습 시작
 ```
@@ -45,7 +47,18 @@ codex plugin add skala-review@skala-review
 node tools/package-skill.mjs
 ```
 
-그 다음 Plugin 버전을 올린 뒤 다시 설치하고 새 대화에서 확인합니다.
+그 다음 플러그인 버전을 올리고 아래 명령으로 marketplace를 갱신합니다.
+
+```bash
+codex plugin marketplace upgrade skala-review
+```
+
+새 대화에서 확인합니다. 설치 상태를 완전히 초기화해야 한다면 아래처럼 제거 후 다시 추가합니다.
+
+```bash
+codex plugin remove skala-review@skala-review
+codex plugin add skala-review@skala-review
+```
 
 ## Claude Code
 
