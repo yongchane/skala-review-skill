@@ -1,0 +1,5 @@
+interface:
+  display_name: "SKALA Review"
+  short_description: "복습하고 플랫폼별 초안을 만듭니다."
+  default_prompt: "오늘 SKALA에서 배운 내용을 복습하고 저장 가능한 노트로 정리해줘."
+

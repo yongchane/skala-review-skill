@@ -1,0 +1,20 @@
+{
+  "name": "skala-review",
+  "interface": {
+    "displayName": "SKALA Review"
+  },
+  "plugins": [
+    {
+      "name": "skala-review",
+      "source": {
+        "source": "local",
+        "path": "./plugins/skala-review"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}
