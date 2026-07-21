@@ -20,6 +20,13 @@ function hash(filePath) {
 }
 
 for (const filePath of [
+  path.join(repositoryRoot, 'LICENSE'),
+  path.join(repositoryRoot, 'CONTRIBUTING.md'),
+  path.join(repositoryRoot, 'CODE_OF_CONDUCT.md'),
+  path.join(repositoryRoot, 'SECURITY.md'),
+  path.join(repositoryRoot, '.github', 'ISSUE_TEMPLATE', 'bug_report.yml'),
+  path.join(repositoryRoot, '.github', 'ISSUE_TEMPLATE', 'feature_request.yml'),
+  path.join(repositoryRoot, '.github', 'pull_request_template.md'),
   path.join(codexSkill, 'SKILL.md'),
   path.join(codexSkill, 'agents', 'openai.yaml'),
   path.join(claudeSkill, 'SKILL.md'),

@@ -1,0 +1,54 @@
+name: 오류 제보
+description: 설치, 실행, 복습 또는 노트 저장 중 발생한 문제를 알려주세요.
+title: "[오류] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        제보해 주셔서 감사합니다. 강의 원문, 개인정보, API 키는 첨부하지 마세요.
+  - type: dropdown
+    id: environment
+    attributes:
+      label: 사용 환경
+      options:
+        - Codex Desktop
+        - Codex CLI
+        - Claude Code
+        - 기타
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Skill 또는 Plugin 버전
+      placeholder: 예) 0.2.0
+  - type: textarea
+    id: problem
+    attributes:
+      label: 어떤 문제가 발생했나요?
+      description: 기대한 결과와 실제 결과를 함께 적어주세요.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 재현 순서
+      placeholder: |
+        1. 플러그인을 설치했습니다.
+        2. 새 대화에서 복습을 시작했습니다.
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: 오류 메시지 또는 로그
+      description: 비밀 값과 개인 경로를 제거한 내용만 붙여주세요.
+      render: shell
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: 자료 보호 확인
+      options:
+        - label: 강의 원문, 개인정보, API 키를 제거했습니다.
+          required: true
