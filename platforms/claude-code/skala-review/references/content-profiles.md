@@ -1,14 +1,13 @@
-# Content profiles
+# 내용 유형
 
-Choose the profile from the user's input, not from a fixed report outline. Tell the user which profile was selected and allow an override.
+고정된 보고서 목차를 강요하지 말고 사용자가 보낸 내용에 따라 유형을 선택한다. 선택한 유형을 사용자에게 알리고 다른 유형으로 바꿀 수 있게 한다.
 
-| Signal in the input | Profile | Suggested flow |
+| 입력에서 보이는 특징 | 유형 | 권장 흐름 |
 | --- | --- | --- |
-| Definitions, confusion, questions | Concept review | Confusion → core idea → example → takeaway |
-| Lesson sequence and instructor emphasis | Lecture recap | Lesson flow → emphasis → my understanding → open question |
-| Code, commands, errors, output | Practice log | Goal → attempt → issue → resolution → lesson |
-| Multiple options or frameworks | Comparison note | Options → criteria → differences → when to use each |
-| A concrete failure or question | Troubleshooting note | Symptom → cause → fix → prevention |
+| 정의, 헷갈림, 개념 질문 | 개념 복습 | 헷갈린 점 → 핵심 개념 → 예시 → 정리 |
+| 수업 순서와 강사의 강조점 | 수업 정리 | 수업 흐름 → 강조점 → 내가 이해한 연결 → 남은 질문 |
+| 코드, 명령어, 오류, 실행 결과 | 실습 기록 | 목표 → 시도 → 문제 → 해결 → 배운 점 |
+| 여러 선택지나 프레임워크 | 비교 노트 | 대상 → 기준 → 차이 → 선택 시점 |
+| 구체적인 실패나 질문 | 문제 해결 노트 | 증상 → 원인 → 해결 → 예방 |
 
-Avoid forcing unused sections. A short memo may produce a short note. Keep the learner's original question or misconception visible when it helps the explanation.
-
+사용하지 않는 목차를 억지로 넣지 않는다. 짧은 메모는 짧은 노트가 되어도 된다. 설명에 도움이 된다면 사용자의 원래 질문이나 오개념을 남긴다.

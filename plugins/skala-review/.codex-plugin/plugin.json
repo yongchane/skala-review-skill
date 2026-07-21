@@ -1,7 +1,7 @@
 {
   "name": "skala-review",
-  "version": "0.1.1",
-  "description": "Review SKALA lessons and create copy-ready learning drafts.",
+  "version": "0.2.0",
+  "description": "SKALA 복습을 안내하고, 검색 가능한 Markdown 노트와 복사 가능한 학습 초안을 만듭니다.",
   "author": {
     "name": "Yongchane"
   },
@@ -9,12 +9,12 @@
   "interface": {
     "displayName": "SKALA Review",
     "shortDescription": "복습 노트와 게시용 초안을 만듭니다.",
-    "longDescription": "Review SKALA study content, save consented Markdown notes, and create copy-ready drafts without auto-publishing.",
+    "longDescription": "정리되지 않은 학습 내용으로 질문식 복습을 진행하고, 동의를 받아 검색 가능한 Markdown 노트를 저장하며, 회상 질문으로 다시 복습하고, 자동 게시 없이 복사 가능한 플랫폼별 초안을 만듭니다.",
     "developerName": "Yongchane",
     "category": "Productivity",
     "capabilities": ["Interactive", "Write"],
     "defaultPrompt": [
-      "오늘 SKALA에서 배운 내용을 복습해줘.",
+      "SKALA 복습 시작",
       "이 메모를 Velog용 초안으로 정리해줘.",
       "저장한 SKALA 복습 노트를 다시 점검해줘."
     ]

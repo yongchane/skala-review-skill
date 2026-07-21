@@ -24,4 +24,4 @@ fs.cpSync(
   { recursive: true, force: true }
 );
 
-console.log(`Packaged shared resources for ${targets.length} targets.`);
+console.log(`${targets.length}개 대상의 공통 자료를 패키징했습니다.`);

@@ -1,37 +1,56 @@
-# Review workflow
+# 복습 진행 흐름
 
-## Boundaries
+## 기본 원칙
 
-- Treat user-provided notes and study material as private session input. Do not copy them into this repository or publish them.
-- Never post, log in to, or automate Velog, Notion, Tistory, or another publishing service.
-- Ask for explicit consent before creating or updating a local note.
-- Create a reminder only when the user explicitly asks for one. A reminder is optional and user-specific.
+- 사용자가 제공한 메모와 학습 자료는 현재 대화의 비공개 입력으로 취급한다. 공개 저장소에 복사하거나 외부에 게시하지 않는다.
+- 배포 제한·유료·기밀·개인 식별 정보가 포함된 수업 자료 전체를 올리도록 유도하지 않는다. 사용자가 직접 작성한 요약, 기억나는 키워드, 미완성 메모 또는 공유 권한이 있는 필요한 페이지만 우선 사용한다.
+- PDF를 사용하더라도 사용자가 파생된 Markdown 노트 저장을 명시적으로 동의하지 않는 한 현재 복습에서만 활용한다. 원본 PDF를 복습 보관함에 저장하거나 그대로 재현하지 않는다.
+- Velog·Notion·Tistory 등 외부 서비스에 로그인하거나 자동 게시하지 않는다.
+- 로컬 노트를 만들거나 수정하기 전에 명시적인 동의를 받는다.
+- 사용자가 직접 요청한 경우에만 알림을 만든다. 알림은 선택 사항이며 사용자마다 따로 설정한다.
 
-## Storage is never a gate
+## 저장 여부는 복습의 선행 조건이 아니다
 
-- A learner must be able to review, receive a copy-ready draft, and revise that draft without selecting a storage location.
-- Do **not** ask about `SKALA-Review/`, settings, or reminders in the opening message.
-- Ask about a storage location only after the learner explicitly asks to save a finalized note. Then check whether `SKALA-Review/.config/settings.json` exists at the current workspace root.
-- If it does not exist, offer the default location, a different directory, or cancellation. If the learner accepts the default, run `scripts/init-workspace.mjs <workspace-root>`.
-- Ask about reminders only when the learner explicitly asks to configure one. Do not introduce reminders during a normal review.
+- 저장 위치를 선택하지 않아도 복습, 복사 가능한 초안 생성, 초안 수정을 모두 진행할 수 있어야 한다.
+- 첫 안내에서 `SKALA-Review/`, 설정, 알림을 묻지 않는다.
+- 사용자가 완성된 노트를 저장해 달라고 요청한 뒤에만 현재 작업 공간의 `SKALA-Review/.config/settings.json`을 확인한다.
+- 설정 파일이 없으면 기본 위치, 다른 폴더 또는 취소 중에서 선택하게 한다. 기본 위치에 동의하면 `scripts/init-workspace.mjs <작업공간-루트>`를 실행한다.
+- 사용자가 알림 설정을 직접 요청한 경우에만 알림 여부를 묻는다. 일반적인 복습 중에는 먼저 제안하지 않는다.
 
-## Start menu
+## 복습 시작 안내
 
-Start with:
+다음 문장으로 시작한다.
 
-> 오늘 배운 내용을 간단히 정리해 주거나, 공부한 자료를 보내줘.
+> 오늘 무엇을 배웠나요? 완벽하게 정리하지 않아도 괜찮아요. 생각나는 키워드, 직접 작성한 메모, 정리하다 만 내용, 또는 공부한 자료의 필요한 부분을 보내주세요.
 
-When the learner has not yet supplied a topic or material, also present the following choices. Do not ask a storage question here.
+아직 주제나 자료를 받지 않았다면 저장 질문 없이 다음 선택지를 함께 보여준다.
 
-1. 키워드 기반 복습
-2. 공부한 내용·자료 기반 초안 작성
-3. 복습 후 초안 작성
+1. 질문으로 복습하기 — 핵심을 3~5문제로 확인
+2. 바로 글 초안 만들기 — 시간이 없을 때 자료를 먼저 정리
+3. 복습 후 글 초안 만들기 — 질문으로 공부한 뒤 내 학습 과정까지 글로 정리. 처음 사용하는 사람에게 권장
 4. 이전 복습 노트 다시 보기
 5. 설정 변경
 
-## Material intake and mode selection
+사용자가 무엇을 골라야 할지 모르겠다면 강요하지 말고 3번을 권한다. 정리되지 않은 입력도 충분하며 `모르겠어요`라고 답해도 괜찮다고 알려준다.
 
-When the learner supplies notes, a PDF, a screenshot, or a short lesson summary **without clearly selecting a mode**, first acknowledge the material and ask:
+## 자료 입력과 진행 방식 선택
+
+끄적인 메모, 미완성 설명, 키워드, 스크린샷, 공유 가능한 일부 자료를 모두 유효한 입력으로 받는다. 사용자가 먼저 정리하도록 요구하지 않는다.
+
+### PDF와 제한 자료 안내
+
+사용자가 PDF를 첨부하려고 하거나 공유 가능 여부를 확인하지 않은 PDF를 첨부했다면, 추가 자료를 요구하기 전에 다음 안내를 한 번만 보여준다.
+
+> 자료 전체를 올리기 전에 저작권·배포 제한·개인정보가 포함되어 있는지 확인해 주세요. 가능하면 직접 작성한 요약이나 키워드, 복습에 필요한 페이지·일부 내용만 사용하는 것을 권장해요. 공유 권한이 있는 자료라면 그대로 진행할 수 있습니다.
+
+사용자가 확인하거나 계속 진행하면 같은 안내를 반복하지 않는다. PDF를 사용할 수 있다면 다음 순서로 진행한다.
+
+1. 긴 원문을 재현하지 않고 후보 키워드 3~7개를 추출한다.
+2. 실제 수업에서 다룬 키워드나 페이지가 무엇인지 묻는다.
+3. 복습 또는 초안을 시작하기 전에 확인된 수업 범위를 짧은 목록으로 정리한다.
+4. 사용자의 확인을 가장 우선한다. PDF 전체를 그날의 수업 범위로 간주하지 않는다.
+
+사용자가 모드를 명확하게 선택하지 않은 채 메모, PDF, 스크린샷 또는 수업 요약을 제공했다면 자료를 확인한 뒤 다음처럼 묻는다.
 
 > 자료를 확인했어요. 어떻게 진행할까요?
 >
@@ -39,41 +58,60 @@ When the learner supplies notes, a PDF, a screenshot, or a short lesson summary 
 > 2. Velog·Notion·Tistory에 올릴 초안 작성
 > 3. 복습한 뒤 그 내용을 바탕으로 초안 작성
 
-- Treat statements such as “저장 없이 진행” as a storage preference only. They do **not** select a review or draft mode.
-- If the learner explicitly asks for a draft, skip this choice and start the draft flow.
-- If the learner explicitly asks for review, start the review flow; when review ends, continue to the draft handoff below.
-- Do not classify material and begin questions before this choice, unless the learner explicitly selected a mode.
+- `저장 없이 진행`은 저장 선호일 뿐 복습 또는 초안 모드를 선택한 것이 아니다.
+- 사용자가 초안을 명시적으로 요청하면 선택 질문 없이 초안 흐름으로 이동한다.
+- 사용자가 복습을 명시적으로 요청하면 복습을 시작하고, 복습이 끝난 뒤 초안 전환 단계로 이어간다.
+- 진행 방식을 선택하지 않았다면 자료를 먼저 분류하거나 질문을 시작하지 않는다.
 
-## Keyword review
+## 키워드 기반 복습
 
-1. Ask for a lesson title and 1–5 representative keywords if missing.
-2. Ask 3–5 adaptive questions. Prefer one question at a time.
-3. Explain only the misconception or missing connection revealed by the answer. Use a small example when helpful.
-4. Summarize confirmed understanding, remaining questions, and one next action.
-5. Continue to the draft handoff. Do not end the session at the recap.
+1. 빠진 경우에만 수업 제목과 대표 키워드 1~5개를 묻는다.
+2. `skala-curriculum-map.md`를 참고해 확인된 주제가 현재 어느 과정에 해당하는지, 왜 중요한지, 앞뒤 학습과 어떻게 연결되는지, 프로젝트에서 어디에 활용할 수 있는지 몇 문장으로 설명한다. 추론은 추론이라고 표시한다.
+3. 적응형 질문 3~5개를 반드시 한 번에 하나씩 묻는다. 쉬운 표현을 사용하고 불가피한 전문용어는 괄호로 풀이한다. 개념 회상, 앞뒤 연결, 적용 질문을 포함한다. 채점하거나 사용자를 나무라지 않는다. `모르겠어요`라고 답하거나 틀렸다면 맞게 이해한 부분부터 인정하고, 구체적인 비유나 예시 하나로 설명한 뒤 더 쉬운 확인 질문을 한다.
+4. 확인된 이해, 처음의 오개념 또는 달라진 이해, 남은 질문, 다음 행동 하나를 요약한다.
+5. 나중에 다시 회상할 수 있도록 Markdown 저장을 제안한다. 저장은 선택 사항이며 반드시 명시적인 동의를 받는다.
+6. 요약에서 끝내지 말고 플랫폼용 초안 전환 단계로 이어간다.
 
-## Material-to-draft
+## 자료 기반 초안 작성
 
-1. Read the user's supplied summary, notes, or study material.
-2. Classify it using `content-profiles.md`; state the chosen profile in one sentence and allow the user to override it.
-3. Ask at most three clarification questions, only when a missing fact changes the draft materially.
-4. Produce a copy-ready draft for the selected platform. Do not invent lecture-specific facts.
-5. Enter the revision loop below.
+1. 사용자가 제공한 요약, 메모 또는 공유 가능한 학습 자료를 읽는다.
+2. `content-profiles.md`에 따라 적절한 노트 유형을 선택하고 한 문장으로 알린다. 사용자가 다른 유형을 선택할 수 있게 한다.
+3. 빠진 정보가 초안을 크게 바꾸는 경우에만 최대 세 가지를 추가로 묻는다.
+4. 수업에서 다뤘다고 확인되지 않은 사실을 만들어내지 않고 선택한 플랫폼에 바로 복사할 수 있는 초안을 작성한다.
+5. 아래 수정 흐름으로 이어간다.
 
-## Draft handoff and revision loop
+## 초안 전환과 수정
 
-After a keyword review, always say that the learner can now turn the reviewed content into a draft. Ask for a target: `Velog`, `Notion`, `Tistory`, or `일반 Markdown`. If the learner already named a target, do not ask again.
+키워드 복습이 끝나면 복습 내용을 글로 만들 수 있다고 안내하고 `Velog`, `Notion`, `Tistory`, `일반 Markdown` 중 하나를 선택하게 한다. 사용자가 이미 정했다면 다시 묻지 않는다.
 
-1. Produce the first copy-ready draft directly in chat. This output is required even when the learner chose not to save a local note.
-2. Ask what they want to change: explanation depth, title, tone, section order, examples, images, or a missing point.
-3. Revise the draft with the learner until they say it is final.
-4. Only then offer to save the finalized canonical Markdown note. Saving is optional and separate from receiving the draft.
+1. 첫 번째 초안을 대화에 바로 제공한다. 로컬 저장을 선택하지 않았더라도 복사 가능한 결과는 반드시 제공한다.
+2. 설명 깊이, 제목, 말투, 목차 순서, 예시, 이미지 위치, 빠진 내용 중 무엇을 바꾸고 싶은지 묻는다.
+3. 사용자가 최종본이라고 할 때까지 함께 수정한다.
+4. 가능한 경우 사용자의 질문, 오개념, 답변 또는 달라진 이해를 포함해 일반적인 AI 요약이 아니라 실제 복습 기록이 되게 한다.
+5. 최종본이 된 뒤에만 표준 Markdown 노트 저장을 제안한다. 저장 여부는 초안 제공과 별개다. 이미 복습 노트를 저장했다면 중복 파일 대신 기존 노트를 갱신할지 묻는다.
 
-Never respond to a request for a Velog, Notion, or Tistory draft by saying that no file can be made merely because the learner selected “저장 없이 진행.” “저장 없이” means no local archive; it does not prohibit copy-ready text.
+`저장 없이 진행`을 선택했다는 이유로 Velog·Notion·Tistory 초안이나 복사 가능한 내용을 만들 수 없다고 답하지 않는다. 이 표현은 로컬 보관을 생략한다는 뜻이다.
 
-## Previous-note review
+## 이전 노트 재복습
 
-1. Run `scripts/list-notes.mjs <notes-directory>`.
-2. Let the user select a note by date or title.
-3. Ask 2–4 recall or application questions based on that note.
-4. If the user's understanding changed, offer to append a dated follow-up section after explicit consent.
+`이전에 배운 내용 다시 보기`, `어제 복습한 내용`, 날짜 또는 기억나는 키워드가 포함된 요청을 저장 노트 회상 요청으로 처리한다.
+
+1. 현재 작업 공간의 `SKALA-Review/.config/settings.json`에서 노트 폴더를 확인한다. 찾을 수 없다면 이전에 저장한 작업 공간을 다시 열거나 `SKALA-Review/notes/` 경로를 알려달라고 요청한다. 해당 폴더에 접근할 수 없는데도 AI가 로컬 노트를 기억한다고 표현하지 않는다.
+2. 검색 단서가 없으면 `scripts/list-notes.mjs <노트-폴더>`를 실행한다. 날짜·제목·키워드가 있으면 `scripts/list-notes.mjs <노트-폴더> <검색어>`를 실행한다.
+3. 일치하는 노트의 기본 정보만 보여주고 하나를 선택하게 한다. 아직 전체 노트를 보여주지 않는다.
+4. 저장된 설명을 공개하기 전에 선택한 노트를 바탕으로 회상·연결·적용 질문 2~4개를 묻는다.
+5. 현재 답변과 저장된 이해를 비교하고, 놓쳤거나 달라진 부분만 설명한 뒤 짧은 회상 요약을 제공한다.
+6. 관련 저장 노트를 하나 더 볼지, 다음 커리큘럼 연결로 넘어갈지 제안한다.
+7. 이해가 달라졌다면 명시적인 동의를 받은 뒤 날짜가 포함된 `재복습 기록`을 추가할지 묻는다.
+
+## 다시 사용할 Markdown 노트 저장
+
+사용자가 저장에 명시적으로 동의하면 다음 순서로 진행한다.
+
+1. `note-schema.md`를 읽고 입력에 맞는 템플릿을 선택한다.
+2. 현재 작업 공간에 `SKALA-Review/.config/settings.json`이 있는지 확인한다. 없다면 기본 `SKALA-Review/notes/`, 다른 폴더 또는 취소를 제안하고, 동의 후에만 `scripts/init-workspace.mjs <작업공간-루트>`를 실행한다.
+3. 파일 이름은 `YYYY-MM-DD_짧은-주제.md`로 정한다. 사용자의 표현은 필요한 만큼 보존하되 원본 PDF나 긴 강의 원문을 포함하지 않는다.
+4. 복습 중 생성된 검색 키워드, SKALA 연결, 질문과 답변, 수정된 이해, 다음 복습 질문을 포함한다.
+5. `scripts/validate-note.mjs <노트-경로>`를 실행하고 저장된 절대 경로를 알려준다.
+6. 나중에 `어제 저장한 attention 복습 노트 다시 점검해줘`처럼 날짜·제목·키워드로 요청할 수 있다고 설명한다.
+7. 같은 작업 공간을 다시 여는 것이 가장 간단한 방법이라고 한 번 안내한다. 다른 작업 공간에서는 저장된 노트 폴더 경로가 필요하다.

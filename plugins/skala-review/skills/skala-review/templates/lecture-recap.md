@@ -5,6 +5,7 @@ profile: lecture-recap
 keywords: []
 status: reviewed
 source: user-provided-summary
+skala_module: ""
 ---
 
 # {title}
@@ -15,5 +16,8 @@ source: user-provided-summary
 
 ## 내가 이해한 연결
 
-## 다음에 다시 볼 질문
+## 복습 질문과 내 답
 
+## 프로젝트에서 써볼 곳
+
+## 다음에 다시 볼 질문

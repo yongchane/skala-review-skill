@@ -4,7 +4,7 @@ import path from 'node:path';
 const root = process.argv[2];
 
 if (!root) {
-  console.error('Usage: node init-workspace.mjs <workspace-root>');
+  console.error('사용법: node init-workspace.mjs <작업공간-루트>');
   process.exit(1);
 }
 
@@ -28,4 +28,3 @@ if (!fs.existsSync(settingsPath)) {
 }
 
 console.log(JSON.stringify({ reviewRoot, notesDirectory, settingsPath }, null, 2));
-

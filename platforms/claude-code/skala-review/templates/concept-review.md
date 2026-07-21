@@ -5,6 +5,7 @@ profile: concept-review
 keywords: []
 status: reviewed
 source: user-provided-summary
+skala_module: ""
 ---
 
 # {title}
@@ -15,5 +16,10 @@ source: user-provided-summary
 
 ## 작은 예시
 
+## 복습 질문과 내 답
+
+## SKALA 과정·프로젝트 연결
+
 ## 오늘의 정리
 
+## 다음에 다시 볼 질문
