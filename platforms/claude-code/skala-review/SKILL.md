@@ -28,6 +28,7 @@ disable-model-invocation: true
 해당 단계에서 필요한 자료만 읽는다.
 
 - `references/workflow.md`: 전체 진행 흐름과 자료 보호 원칙
+- `templates/first-run-notice.md`: 새 대화의 첫 실행 안내를 원문 그대로 출력할 때 사용
 - `references/content-profiles.md`: 입력 내용에 맞는 노트 구조 선택
 - `references/output-profiles.md`: 플랫폼별 복사 가능한 출력 형식
 - `references/note-schema.md`: 노트를 저장하기 전 표준 형식 확인

@@ -1,6 +1,6 @@
 {
   "name": "skala-review",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "SKALA 질문 복습, 빠른 요약, 플랫폼별 복습 글 작성과 Markdown 재복습을 돕습니다.",
   "author": {
     "name": "Yongchane"
