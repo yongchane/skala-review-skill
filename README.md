@@ -151,6 +151,35 @@ AI 업데이트 명령을 사용할 수 없는 환경에서는 다음 명령을 
 bash ~/.local/share/skala-review-skill/tools/update-claude-code.sh
 ```
 
+### Claude Code 권한 요청 안내
+
+업데이트를 시작하면 먼저 변경 대상과 보호되는 개인 자료를 설명하는 안내문이 표시됩니다. 그다음 Claude Code가 아래 명령 하나의 실행 권한을 요청합니다.
+
+```bash
+bash ~/.local/share/skala-review-skill/tools/update-claude-code.sh
+```
+
+명령 내용을 확인하고 **이번만 허용**을 선택하면 됩니다. 정상 업데이트에서는 README나 템플릿을 하나씩 읽거나 여러 명령의 권한을 반복해서 요청하지 않습니다. 업데이트 명령이 실패한 경우에만 설치 위치와 오류 원인을 추가로 확인합니다.
+
+반복적인 확인을 원하지 않는 사용자는 Claude Code의 `/permissions`에서 다음의 정확한 명령 하나만 허용할 수 있습니다.
+
+```text
+Bash(bash ~/.local/share/skala-review-skill/tools/update-claude-code.sh)
+```
+
+`Bash` 또는 `Bash(*)`처럼 모든 Bash 명령을 허용하지 마세요. 위 규칙은 SKALA 복습 스킬 업데이트 명령에만 적용해야 합니다. 자세한 권한 동작은 [Claude Code 권한 문서](https://code.claude.com/docs/en/permissions)를 참고하세요.
+
+| 작업 | 예상되는 권한 요청 |
+|---|---|
+| 질문으로 복습하기 | 없음 |
+| 빠른 요약 | 없음 |
+| 대화에 복습 글 초안 출력 | 없음 |
+| Markdown 파일로 저장 | 저장 위치에 따라 파일 쓰기 승인 가능 |
+| Skill 설치·업데이트 | Bash 실행 승인 필요 |
+| GitHub Release 다운로드 | 업데이트 스크립트 실행 승인에 포함 |
+
+일반 복습 중에도 Bash 실행 승인이 계속 나타난다면 정상 동작이 아닙니다. 실행을 취소한 뒤 GitHub Issue에 사용한 요청 문구와 표시된 명령을 알려주세요.
+
 특정 프로젝트에서만 사용하려면 프로젝트 루트의 `.claude/skills/`에 직접 복사할 수 있습니다. 이 방식은 자동 연결되지 않으므로 새 Release마다 다시 동기화해야 합니다.
 
 ```bash

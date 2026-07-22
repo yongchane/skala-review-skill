@@ -123,11 +123,23 @@ assert.equal(
 includesAll(claudeUpdateText, [
   'SKALA 복습 스킬 업데이트해줘',
   '/skala-review-update',
+  '🔐 **SKALA 복습 스킬 업데이트 안내**',
+  '이번만 허용',
   'update-claude-code.sh',
   'install-claude-code.sh',
   'yongchane/skala-review-skill',
+  '정상 업데이트에서는 다른 명령을 실행하지 않는다.',
+  '실패한 경우에만 진단',
+  '일반 복습, 빠른 요약, 대화에 복습 글을 출력하는 과정에서는 Bash 명령을 실행하지 않는다.',
   '반드시 재실행을 안내한다.'
 ], 'Claude Code 업데이트 Skill');
+
+const updateCommand = 'bash ~/.local/share/skala-review-skill/tools/update-claude-code.sh';
+assert.equal(
+  claudeUpdateText.split(updateCommand).length - 1,
+  1,
+  'Claude Code 업데이트 Skill의 정상 업데이트 명령은 한 번만 나타나야 합니다.'
+);
 
 for (const text of [codexText, pluginCodexText, claudeText]) {
   includesAll(text, [
@@ -249,6 +261,10 @@ includesAll(readme, [
   '기존 Claude Code 사용자의 최초 마이그레이션',
   'SKALA 복습 스킬 업데이트해줘',
   '/skala-review-update',
+  'Claude Code 권한 요청 안내',
+  '이번만 허용',
+  'Bash(bash ~/.local/share/skala-review-skill/tools/update-claude-code.sh)',
+  '일반 복습 중에도 Bash 실행 승인이 계속 나타난다면 정상 동작이 아닙니다.',
   '업데이트와 Release',
   '제작자가 GitHub에 변경사항을 푸시하는 것만으로 사용자 로컬 설치본이 자동 변경되지는 않습니다.',
   '직접 설치 가능한 Codex Skill 완성본',

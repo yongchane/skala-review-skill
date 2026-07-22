@@ -7,28 +7,50 @@ description: SKALA Review Skill 설치·업데이트 전용 스킬. 사용자가
 
 사용자가 SKALA Review Skill 설치 또는 업데이트를 명시적으로 요청한 경우에만 실행한다. 일반 복습 중에는 업데이트를 확인하거나 실행하지 않는다.
 
-## 실행 순서
+## 정상 업데이트
 
-1. `~/.local/share/skala-review-skill/tools/update-claude-code.sh`가 있으면 다음 명령을 실행한다.
+명령을 실행하기 전에 다음 안내문을 그대로 출력한다.
 
-   ```bash
-   bash ~/.local/share/skala-review-skill/tools/update-claude-code.sh
-   ```
+> 🔐 **SKALA 복습 스킬 업데이트 안내**
+>
+> 이번 작업은 다음 위치의 SKALA 복습 스킬 파일만 업데이트합니다.
+>
+> - `~/.local/share/skala-review-skill`
+> - `~/.claude/skills/skala-review`
+> - `~/.claude/skills/skala-review-update`
+>
+> 복습 노트와 개인 학습 자료는 수정하거나 삭제하지 않습니다. 취소해도 현재 설치된 스킬은 그대로 유지됩니다.
+>
+> 이어서 표시되는 명령 실행 요청에서 내용을 확인한 뒤 **이번만 허용**을 선택해 주세요.
 
-2. 관리형 설치가 없다면 현재 Git 저장소의 원격 주소가 `yongchane/skala-review-skill`인지 확인한다.
-3. 확인된 저장소 루트에 `tools/install-claude-code.sh`가 있으면 다음 명령으로 기존 복사 설치본을 관리형 설치로 전환한다.
+안내문을 출력한 다음 README, 다른 Markdown 파일, 설치 경로, Git 상태를 미리 조사하지 말고 다음 명령 하나만 실행한다.
 
-   ```bash
-   bash <저장소-루트>/tools/install-claude-code.sh
-   ```
+```bash
+bash ~/.local/share/skala-review-skill/tools/update-claude-code.sh
+```
 
-4. 두 경로를 모두 찾을 수 없다면 임의의 스크립트를 내려받아 실행하지 않는다. 공식 저장소를 먼저 clone하거나 기존 clone 위치를 알려달라고 요청한다.
-5. 명령의 실제 출력으로 적용 버전과 검증 성공 여부를 확인한다. 확인하지 않은 성공을 보고하지 않는다.
-6. 완료 후 Claude Code를 완전히 종료하고 새 세션에서 `/skala-review`를 실행하라고 안내한다.
+명령이 성공하면 실제 출력에서 적용 버전과 검증 성공 여부를 확인하고, Claude Code를 완전히 종료한 뒤 새 세션에서 `/skala-review`를 실행하라고 안내한다. 정상 업데이트에서는 다른 명령을 실행하지 않는다.
+
+## 실패한 경우에만 진단
+
+업데이트 명령이 실패한 경우에만 오류 출력을 먼저 요약하고 다음 순서로 최소한의 진단을 수행한다.
+
+1. 오류가 관리형 설치 부재를 의미하는지 확인한다.
+2. 사용자가 현재 열어 둔 Git 저장소가 있다면 원격 주소가 `yongchane/skala-review-skill`인지 확인한다.
+3. 공식 저장소 루트의 `tools/install-claude-code.sh`가 확인된 경우에만 다음 명령으로 기존 복사 설치본을 관리형 설치로 전환한다.
+
+```bash
+bash <저장소-루트>/tools/install-claude-code.sh
+```
+
+4. 공식 저장소를 확인할 수 없다면 임의의 스크립트를 내려받아 실행하지 않는다. 공식 저장소를 먼저 clone하거나 기존 clone 위치를 알려달라고 요청한다.
+5. 스크립트 실패 원인과 이전 버전 복구 여부를 실제 출력으로 확인한다. 확인하지 않은 성공을 보고하지 않는다.
 
 ## 안전 규칙
 
 - 사용자의 명시적 업데이트 요청을 실행 동의로 취급하되, 런타임이 터미널 권한 확인을 요구하면 해당 확인 절차를 따른다.
+- 정상 업데이트 전에 파일 목록 조회, README·템플릿 재열람, `git status`, `git pull`, 별도 버전 확인 명령을 실행하지 않는다.
+- 일반 복습, 빠른 요약, 대화에 복습 글을 출력하는 과정에서는 Bash 명령을 실행하지 않는다.
 - 공식 저장소가 아닌 Git 원격이나 관련 없는 프로젝트에서 설치 스크립트를 실행하지 않는다.
 - 업데이트 스크립트가 실패하면 오류를 그대로 요약하고, 이전 버전 복구 여부를 출력에서 확인한다.
 - 기존 복습 노트와 `SKALA-Review/` 폴더를 변경하거나 삭제하지 않는다.
