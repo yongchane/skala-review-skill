@@ -119,6 +119,8 @@ for (const platform of ['ChatGPT 웹', 'Gemini 웹', 'Claude 웹']) {
 }
 for (const requiredScopeGuide of [
   'README의 AI 실행 라우터',
+  'https://github.com/yongchane/skala-review-skill/blob/main/README.md',
+  '저장소를 추측하거나 코드 리뷰 설명을 하지 마.',
   'SKALA-REVIEW-WEB-BUNDLE.md',
   '설치 불가 안내나 코드 리뷰 설명을 하지 않고',
   'GitHub 내용을 읽지 못했다면',
@@ -141,6 +143,8 @@ for (const requiredGuide of [
   'Gemini 웹',
   'Claude 웹',
   '## AI 실행 라우터',
+  'https://github.com/yongchane/skala-review-skill/blob/main/README.md',
+  '저장소를 추측하거나 코드 리뷰 설명을 하지 마.',
   '웹 AI는 로컬 Skill 설치를 시도하거나 코드 리뷰 도구로 추측하지 않는다.',
   'platforms/web/SKALA-REVIEW-WEB-BUNDLE.md',
   'README를 읽을 수 없는 웹 대화에서는',

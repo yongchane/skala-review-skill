@@ -2,18 +2,19 @@
 
 터미널이나 코딩 도구가 없어도 ChatGPT, Gemini, Claude 웹에서 SKALA 복습 흐름을 사용할 수 있습니다. 웹 버전은 프로그램을 설치하는 대신 README의 환경 라우터와 자기완결형 웹 실행 번들을 현재 대화에 적용합니다.
 
-## 저장소 링크로 바로 시작하기
+## README 링크로 바로 시작하기
 
-`.git` clone 주소가 아니라 저장소의 일반 웹 주소를 사용합니다.
+저장소 루트나 `.git` clone 주소가 아니라 README 파일 직접 링크를 사용합니다. 저장소 루트 링크만 전달하면 일부 웹 AI는 README를 읽기 전에 접근에 실패하거나 이 저장소를 코드 리뷰 Skill로 잘못 추측할 수 있습니다.
 
 ```text
-https://github.com/yongchane/skala-review-skill
-README의 AI 실행 라우터에 따라 현재 환경에 맞게 진행해.
+https://github.com/yongchane/skala-review-skill/blob/main/README.md
+이 README를 직접 열고 최상단의 AI 실행 라우터에 따라 진행해.
+저장소를 추측하거나 코드 리뷰 설명을 하지 마.
 ```
 
-웹 AI가 README를 읽을 수 있다면 [자기완결형 웹 실행 번들](SKALA-REVIEW-WEB-BUNDLE.md)로 이동해 설치 불가 안내나 코드 리뷰 설명을 하지 않고 첫 복습 질문부터 시작합니다.
+웹 AI가 README를 읽을 수 있다면 README의 AI 실행 라우터에 따라 [자기완결형 웹 실행 번들](SKALA-REVIEW-WEB-BUNDLE.md)로 이동해 설치 불가 안내나 코드 리뷰 설명을 하지 않고 첫 복습 질문부터 시작합니다.
 
-GitHub 접근 가능 여부는 서비스, 계정, 대화의 탐색 기능에 따라 달라집니다. GitHub 내용을 읽지 못했다면 다른 Skill로 추측하지 않고 웹 실행 번들 첨부를 요청하는 것이 정상적인 실패 처리입니다.
+GitHub 접근 가능 여부는 서비스, 계정, 대화의 탐색 기능에 따라 달라집니다. README 직접 링크 방식은 ChatGPT 웹에서 첫 복습 질문까지 확인했지만, 모든 웹 서비스에서 링크 열기를 보장하지는 않습니다. GitHub 내용을 읽지 못했다면 같은 요청을 반복하지 말고 웹 실행 번들을 첨부합니다.
 
 ## 가장 빠르게 시험하기
 
