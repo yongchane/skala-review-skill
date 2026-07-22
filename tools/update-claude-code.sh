@@ -4,8 +4,6 @@ set -euo pipefail
 
 managed_root="${SKALA_REVIEW_HOME:-$HOME/.local/share/skala-review-skill}"
 skills_root="${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}"
-skill_target="$skills_root/skala-review"
-skill_source="$managed_root/platforms/claude-code/skala-review"
 
 if [[ ! -d "$managed_root/.git" ]]; then
   printf '관리형 설치를 찾을 수 없습니다: %s\n' "$managed_root" >&2
@@ -13,11 +11,14 @@ if [[ ! -d "$managed_root/.git" ]]; then
   exit 1
 fi
 
-if [[ ! -L "$skill_target" ]]; then
-  printf '현재 Skill이 관리형 심볼릭 링크 설치가 아닙니다: %s\n' "$skill_target" >&2
-  printf 'tools/install-claude-code.sh를 한 번 실행해 기존 설치를 마이그레이션해 주세요.\n' >&2
-  exit 1
-fi
+for skill_name in skala-review skala-review-update; do
+  skill_target="$skills_root/$skill_name"
+  if [[ ! -L "$skill_target" ]]; then
+    printf '현재 Skill이 관리형 심볼릭 링크 설치가 아닙니다: %s\n' "$skill_target" >&2
+    printf 'tools/install-claude-code.sh를 한 번 실행해 기존 설치를 마이그레이션해 주세요.\n' >&2
+    exit 1
+  fi
+done
 
 old_commit="$(git -C "$managed_root" rev-parse HEAD)"
 old_version="$(tr -d '[:space:]' < "$managed_root/VERSION")"
@@ -46,9 +47,10 @@ if command -v node >/dev/null 2>&1; then
   fi
 else
   for required_file in \
-    "$skill_source/SKILL.md" \
-    "$skill_source/references/workflow.md" \
-    "$skill_source/templates/first-run-notice.md"; do
+    "$managed_root/platforms/claude-code/skala-review/SKILL.md" \
+    "$managed_root/platforms/claude-code/skala-review/references/workflow.md" \
+    "$managed_root/platforms/claude-code/skala-review/templates/first-run-notice.md" \
+    "$managed_root/platforms/claude-code/skala-review-update/SKILL.md"; do
     if [[ ! -f "$required_file" ]]; then
       git -C "$managed_root" checkout --detach --force "$old_commit"
       printf '필수 파일 검증에 실패해 이전 버전 %s으로 복구했습니다.\n' "$old_version" >&2

@@ -107,7 +107,7 @@ cd skala-review-skill
 bash tools/install-claude-code.sh
 ```
 
-설치 스크립트는 검증된 최신 GitHub Release를 `~/.local/share/skala-review-skill`에 보관하고, `~/.claude/skills/skala-review`를 해당 배포본에 연결합니다. 기존 복사 설치본이 있으면 삭제하지 않고 날짜가 붙은 백업 폴더로 이동합니다.
+설치 스크립트는 검증된 최신 GitHub Release를 `~/.local/share/skala-review-skill`에 보관하고, 복습용 `skala-review`와 업데이트용 `skala-review-update`를 `~/.claude/skills/`에 연결합니다. 기존 복사 설치본이 있으면 삭제하지 않고 날짜가 붙은 백업 폴더로 이동합니다.
 
 설치가 끝나면 Claude Code를 완전히 종료하고 새 세션에서 시작합니다.
 
@@ -117,21 +117,39 @@ bash tools/install-claude-code.sh
 
 ### 기존 Claude Code 사용자의 최초 마이그레이션
 
-이전 안내에 따라 Skill 폴더를 복사해 설치한 사용자는 Git 저장소에서 `git pull`만 실행해도 실제 설치 폴더가 바뀌지 않습니다. 기존에 내려받은 저장소에서 다음 명령을 한 번 실행하면 관리형 설치로 전환됩니다.
+이전 안내에 따라 Skill 폴더를 복사해 설치한 사용자는 Git 저장소에서 `git pull`만 실행해도 실제 설치 폴더가 바뀌지 않습니다. 다만 최신 저장소에는 프로젝트용 업데이트 Skill이 포함되어 있으므로, 다음처럼 저장소를 갱신하고 해당 위치에서 Claude Code를 다시 실행합니다.
 
 ```bash
 cd /path/to/skala-review-skill
 git pull --ff-only origin main
+claude
+```
+
+Claude Code에서 다음처럼 요청하면 기존 복사 설치본을 관리형 설치로 전환합니다.
+
+```text
+SKALA 복습 스킬 업데이트해줘
+```
+
+또는 다음 명령을 사용할 수 있습니다.
+
+```text
+/skala-review-update
+```
+
+업데이트 Skill을 사용할 수 없는 경우에만 다음 명령을 직접 실행합니다.
+
+```bash
 bash tools/install-claude-code.sh
 ```
 
-이후 업데이트는 다음 한 줄로 처리합니다.
+최초 전환 이후에는 어느 프로젝트에서든 `SKALA 복습 스킬 업데이트해줘` 또는 `/skala-review-update`를 사용할 수 있습니다. 업데이트가 끝나면 Claude Code를 완전히 종료하고 다시 실행합니다. 업데이트 스크립트는 최신 Release를 적용한 뒤 프로젝트 검증을 실행하며, 검증에 실패하면 이전 커밋으로 복구합니다.
+
+AI 업데이트 명령을 사용할 수 없는 환경에서는 다음 명령을 직접 실행할 수 있습니다.
 
 ```bash
 bash ~/.local/share/skala-review-skill/tools/update-claude-code.sh
 ```
-
-업데이트가 끝나면 Claude Code를 완전히 종료하고 다시 실행합니다. 업데이트 스크립트는 최신 Release를 적용한 뒤 프로젝트 검증을 실행하며, 검증에 실패하면 이전 커밋으로 복구합니다.
 
 특정 프로젝트에서만 사용하려면 프로젝트 루트의 `.claude/skills/`에 직접 복사할 수 있습니다. 이 방식은 자동 연결되지 않으므로 새 Release마다 다시 동기화해야 합니다.
 
@@ -142,13 +160,13 @@ cp -R /path/to/skala-review-skill/platforms/claude-code/skala-review .claude/ski
 
 ## 업데이트와 Release
 
-GitHub의 `main` 브랜치는 다음 버전을 준비하는 개발 상태일 수 있습니다. 일반 사용자의 설치·업데이트 스크립트는 `v0.6.0`과 같은 GitHub Release 태그 중 가장 최신 버전을 사용합니다.
+GitHub의 `main` 브랜치는 다음 버전을 준비하는 개발 상태일 수 있습니다. 일반 사용자의 설치·업데이트 스크립트는 `v0.6.1`과 같은 GitHub Release 태그 중 가장 최신 버전을 사용합니다.
 
 | 환경 | 업데이트 방법 |
 |---|---|
 | Codex Plugin | `codex plugin marketplace upgrade skala-review` 실행 후 새 대화 시작 |
 | Codex 직접 설치 | 최신 Release 또는 `platforms/codex/skala-review`를 다시 설치한 뒤 새 대화 시작 |
-| Claude Code 관리형 설치 | `bash ~/.local/share/skala-review-skill/tools/update-claude-code.sh` 실행 후 재시작 |
+| Claude Code 관리형 설치 | `SKALA 복습 스킬 업데이트해줘` 또는 `/skala-review-update` 실행 후 재시작 |
 | Claude Code 프로젝트 복사 설치 | 저장소 업데이트 후 프로젝트의 `.claude/skills/skala-review`를 다시 동기화 |
 | 웹 AI 프롬프트 | GitHub에서 최신 프롬프트 코드 블록을 다시 복사 |
 
@@ -256,11 +274,14 @@ node tools/validate.mjs
 
 ```text
 skala-review-skill/
+├── .claude/skills/skala-review-update/ # 기존 clone에서 사용하는 업데이트 진입점
 ├── core/                              # 에이전트 공통 워크플로·템플릿·스크립트
 ├── plugins/skala-review/              # Codex Plugin 배포본
 ├── platforms/
 │   ├── codex/skala-review/            # 직접 설치 가능한 Codex Skill 완성본
-│   └── claude-code/skala-review/       # Claude Code Skill 완성본
+│   └── claude-code/
+│       ├── skala-review/               # Claude Code 복습 Skill
+│       └── skala-review-update/        # Claude Code 업데이트 Skill
 ├── web-prompts/                       # 웹 AI에서 복사해 쓰는 공개 프롬프트
 ├── tests/
 └── tools/                             # 패키징·검증 도구

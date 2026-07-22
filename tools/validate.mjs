@@ -11,6 +11,8 @@ const core = path.join(repositoryRoot, 'core');
 const codexStandaloneSkill = path.join(repositoryRoot, 'platforms', 'codex', 'skala-review');
 const codexPluginSkill = path.join(repositoryRoot, 'plugins', 'skala-review', 'skills', 'skala-review');
 const claudeSkill = path.join(repositoryRoot, 'platforms', 'claude-code', 'skala-review');
+const claudeUpdateSkill = path.join(repositoryRoot, 'platforms', 'claude-code', 'skala-review-update');
+const claudeProjectUpdateSkill = path.join(repositoryRoot, '.claude', 'skills', 'skala-review-update');
 const webPrompts = path.join(repositoryRoot, 'web-prompts');
 const versionFile = path.join(repositoryRoot, 'VERSION');
 const claudeInstallScript = path.join(repositoryRoot, 'tools', 'install-claude-code.sh');
@@ -49,6 +51,8 @@ for (const filePath of [
   path.join(codexPluginSkill, 'SKILL.md'),
   path.join(codexPluginSkill, 'agents', 'openai.yaml'),
   path.join(claudeSkill, 'SKILL.md'),
+  path.join(claudeUpdateSkill, 'SKILL.md'),
+  path.join(claudeProjectUpdateSkill, 'SKILL.md'),
   path.join(webPrompts, 'README.md'),
   path.join(webPrompts, 'skala-review-prompt.md'),
   path.join(webPrompts, 'skala-quick-draft-prompt.md'),
@@ -108,6 +112,22 @@ assert.equal(
   'Codex 독립 Skill과 Plugin Skill의 에이전트 메타데이터가 다릅니다.'
 );
 assert.match(claudeText, /^---\nname: skala-review\ndescription: .+\ndisable-model-invocation: true\n---/);
+
+const claudeUpdateText = fs.readFileSync(path.join(claudeUpdateSkill, 'SKILL.md'), 'utf8');
+assert.match(claudeUpdateText, /^---\nname: skala-review-update\ndescription: .+\n---/);
+assert.equal(
+  hash(path.join(claudeUpdateSkill, 'SKILL.md')),
+  hash(path.join(claudeProjectUpdateSkill, 'SKILL.md')),
+  'Claude Code 전역·프로젝트 업데이트 Skill이 다릅니다.'
+);
+includesAll(claudeUpdateText, [
+  'SKALA 복습 스킬 업데이트해줘',
+  '/skala-review-update',
+  'update-claude-code.sh',
+  'install-claude-code.sh',
+  'yongchane/skala-review-skill',
+  '반드시 재실행을 안내한다.'
+], 'Claude Code 업데이트 Skill');
 
 for (const text of [codexText, pluginCodexText, claudeText]) {
   includesAll(text, [
@@ -227,6 +247,8 @@ includesAll(readme, [
   'bash tools/install-claude-code.sh',
   'tools/update-claude-code.sh',
   '기존 Claude Code 사용자의 최초 마이그레이션',
+  'SKALA 복습 스킬 업데이트해줘',
+  '/skala-review-update',
   '업데이트와 Release',
   '제작자가 GitHub에 변경사항을 푸시하는 것만으로 사용자 로컬 설치본이 자동 변경되지는 않습니다.',
   '직접 설치 가능한 Codex Skill 완성본',
