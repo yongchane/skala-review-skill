@@ -1,6 +1,6 @@
 {
   "name": "skala-review",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "SKALA 복습을 안내하고, 검색 가능한 Markdown 노트와 복사 가능한 학습 초안을 만듭니다.",
   "author": {
     "name": "Yongchane"

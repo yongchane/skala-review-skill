@@ -118,12 +118,11 @@ for (const platform of ['ChatGPT 웹', 'Gemini 웹', 'Claude 웹']) {
   assert.ok(webGuide.includes(platform), `웹 사용 안내에 플랫폼이 없습니다: ${platform}`);
 }
 for (const requiredScopeGuide of [
-  'README의 AI 실행 라우터',
-  'https://github.com/yongchane/skala-review-skill/blob/main/README.md',
-  '저장소를 추측하거나 코드 리뷰 설명을 하지 마.',
+  '가장 쉬운 시작 방법',
+  'https://github.com/yongchane/skala-review-skill/blob/main/platforms/web/SKALA-REVIEW-WEB-BUNDLE.md',
+  'SKALA 복습 시작해줘',
   'SKALA-REVIEW-WEB-BUNDLE.md',
-  '설치 불가 안내나 코드 리뷰 설명을 하지 않고',
-  'GitHub 내용을 읽지 못했다면',
+  '링크 내용을 읽지 못했다면',
   '파일 전체를 복사하거나 `.md` 파일로 내려받습니다.',
   '첨부하거나 붙여 넣은 SKALA 웹 실행 번들을 이 대화에 적용해줘.',
   '지침을 요약하거나 설명하지 말고 바로 SKALA 복습을 시작해줘.',
@@ -143,6 +142,9 @@ for (const requiredGuide of [
   'Gemini 웹',
   'Claude 웹',
   '## AI 실행 라우터',
+  '## 웹에서 가장 쉽게 시작하기',
+  'https://github.com/yongchane/skala-review-skill/blob/main/platforms/web/SKALA-REVIEW-WEB-BUNDLE.md',
+  'SKALA 복습 시작해줘',
   'https://github.com/yongchane/skala-review-skill/blob/main/README.md',
   '저장소를 추측하거나 코드 리뷰 설명을 하지 마.',
   '웹 AI는 로컬 Skill 설치를 시도하거나 코드 리뷰 도구로 추측하지 않는다.',
