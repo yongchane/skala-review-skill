@@ -1,4 +1,4 @@
 interface:
   display_name: "SKALA Review"
-  short_description: "질문 복습부터 글·보고서 작성까지 돕습니다."
+  short_description: "질문 복습부터 플랫폼별 글 작성까지 돕습니다."
   default_prompt: "SKALA 복습 도우미의 주요 기능을 안내하고 오늘 배운 내용을 질문으로 복습해줘."
