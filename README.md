@@ -34,6 +34,43 @@
 
 터미널을 사용할 수 없다면 [웹 브라우저 사용 안내](platforms/web/README.md)를 따라 공통 복습 지침을 복사하면 됩니다.
 
+> **웹 사용자 필독:** 일반 ChatGPT·Gemini·Claude 대화에 GitHub 저장소 주소만 보내고 `이 스킬을 실행해줘`라고 요청해서는 이 Skill이 적용되지 않습니다. 웹에서는 [웹 공통 복습 지침](platforms/web/SKALA-REVIEW-WEB-INSTRUCTIONS.md)의 **파일 전체를 복사해 붙여 넣거나 `.md` 파일로 첨부**해야 합니다.
+
+## GitHub 링크로 시작하려는 경우
+
+하나의 저장소 링크와 `해당 링크 진행해`라는 같은 문장을 모든 AI에 보내는 방식은 지원하지 않습니다. 실제 검증 결과 웹 AI는 링크 내용을 읽지 못하거나 다른 프로젝트로 추측했고, Codex는 저장소 링크를 복습 실행이 아닌 Skill 설치 요청으로 해석했습니다. 환경에 맞는 아래 방법을 사용하세요.
+
+### Codex: 직접 Skill 링크로 설치
+
+새 Codex 대화에 다음 문장을 그대로 보냅니다.
+
+```text
+https://github.com/yongchane/skala-review-skill/tree/main/plugins/skala-review/skills/skala-review 해당 스킬 설치해줘
+```
+
+설치 완료 안내를 받은 다음 **새 대화**에서 아래처럼 시작합니다.
+
+```text
+$skala-review SKALA 복습 시작
+```
+
+이 흐름은 깨끗한 임시 Codex 환경에서 `설치 → 새 세션 실행 → 오늘 무엇을 배웠나요?`까지 검증했습니다.
+
+### Claude Code: 설치할 폴더까지 명시
+
+Claude Code에는 저장소 루트 링크만 보내지 말고 다음처럼 복사할 경로를 함께 요청합니다.
+
+```text
+https://github.com/yongchane/skala-review-skill 저장소를 clone하고,
+platforms/claude-code/skala-review 폴더를 ~/.claude/skills/skala-review에 설치해줘.
+```
+
+설치 후 새 세션에서 `/skala-review`를 입력합니다. 이 저장소의 Claude Code 배포본은 공통 원본과의 파일 일치 및 구조 검증을 통과했지만, 현재 개발 환경에는 Claude Code 실행 파일이 없어 실제 계정 세션 테스트는 수행하지 못했습니다.
+
+### ChatGPT·Gemini·Claude 웹: 링크만으로 실행 불가
+
+저장소 링크와 `해당 링크 진행해`만 보내는 방식은 사용하지 않습니다. [웹 브라우저 사용 안내](platforms/web/README.md)에 따라 웹 공통 복습 지침 전체를 복사하거나 파일로 첨부하세요.
+
 ## 공통 복습 흐름
 
 준비를 마친 뒤 새 대화에서 환경에 맞는 시작 문구를 입력합니다. Codex에서는 다음처럼 명시적으로 호출하는 것이 가장 확실합니다.
@@ -141,11 +178,26 @@ Skill은 플랫폼에 로그인하거나 글을 자동으로 게시하지 않습
 
 ChatGPT·Gemini·Claude 웹 사용자는 터미널 설치가 필요 없습니다.
 
+다음 방식은 웹에서 동작하지 않습니다.
+
+```text
+yongchane/skala-review-skill.git 해당 스킬 실행해줘
+```
+
+웹 AI는 저장소 주소만으로 로컬 Agent Skill을 설치하거나 `SKILL.md`를 자동 실행하지 못합니다. 아래 웹 공통 복습 지침을 직접 전달해야 합니다.
+
 1. [웹 공통 복습 지침](platforms/web/SKALA-REVIEW-WEB-INSTRUCTIONS.md)을 엽니다.
-2. 전체 내용을 맞춤 GPT, ChatGPT Project, Gemini Gem 또는 Claude Project의 지침에 붙여 넣습니다.
-3. 필요하면 [`platforms/web/knowledge/`](platforms/web/knowledge/)의 공개 커리큘럼·출력 형식·노트 구조 파일을 지식 자료로 추가합니다.
-4. 새 대화에서 `SKALA 복습 시작`이라고 입력합니다.
-5. 복습이 끝나면 Markdown 보관본을 직접 저장하고, 다음 복습 때 다시 첨부합니다.
+2. 파일 전체를 복사하거나 `.md` 파일로 내려받습니다.
+3. 일반 대화에 전체 내용을 붙여 넣거나 파일을 첨부합니다. 계속 사용하려면 맞춤 GPT, ChatGPT Project, Gemini Gem 또는 Claude Project의 지침에 등록합니다.
+4. 필요하면 [`platforms/web/knowledge/`](platforms/web/knowledge/)의 공개 커리큘럼·출력 형식·노트 구조 파일을 지식 자료로 추가합니다.
+5. 다음 문구를 그대로 입력합니다.
+
+```text
+첨부하거나 붙여 넣은 SKALA 웹 공통 복습 지침을 이 대화에 적용해줘.
+지침을 요약하거나 설명하지 말고 바로 SKALA 복습을 시작해줘.
+```
+
+정상적으로 적용되면 AI는 저장소 설치 방법을 설명하는 대신 `오늘 무엇을 배웠나요?`라고 물어봅니다. 복습이 끝나면 Markdown 보관본을 직접 저장하고, 다음 복습 때 다시 첨부합니다.
 
 ### 웹 지침은 어디까지 유지되나요?
 
@@ -153,7 +205,7 @@ ChatGPT·Gemini·Claude 웹 사용자는 터미널 설치가 필요 없습니다
 
 | 적용 방식 | 유지 범위 |
 |---|---|
-| 일반 채팅에 GitHub 링크나 지침 전달 | 현재 채팅에서만 적용 |
+| 일반 채팅에 지침 전체 전달 | 현재 채팅에서만 적용 |
 | ChatGPT Project instructions | 해당 Project 안의 채팅 |
 | 맞춤 GPT | 해당 GPT로 시작한 채팅 |
 | Gemini Gem | 해당 Gem으로 시작한 채팅 |
