@@ -33,6 +33,7 @@ for (const filePath of [
   path.join(claudeSkill, 'SKILL.md'),
   path.join(webPlatform, 'README.md'),
   path.join(webPlatform, 'SKALA-REVIEW-WEB-INSTRUCTIONS.md'),
+  path.join(webPlatform, 'SKALA-REVIEW-WEB-BUNDLE.md'),
   path.join(repositoryRoot, 'plugins', 'skala-review', '.codex-plugin', 'plugin.json'),
   path.join(repositoryRoot, '.agents', 'plugins', 'marketplace.json')
 ]) required(filePath);
@@ -82,15 +83,47 @@ for (const requiredRule of [
   '외부 플랫폼에 로그인하거나 게시했다고 말하지 않는다.'
 ]) assert.ok(webInstructions.includes(requiredRule), `웹 필수 진행 규칙이 없습니다: ${requiredRule}`);
 
+const webBundle = fs.readFileSync(path.join(webPlatform, 'SKALA-REVIEW-WEB-BUNDLE.md'), 'utf8');
+for (const requiredBundleRule of [
+  '## 웹 AI 실행 계약',
+  '로컬 Skill 설치 가능 여부, 코드 리뷰 절차 또는 저장소 구조를 설명하지 않는다.',
+  '바로 복습 흐름을 시작한다.',
+  '## 복습 실행 하네스',
+  '## SKALA 교육 과정 연결 기준',
+  '## 내용 유형 선택 기준',
+  '## 플랫폼별 출력 기준',
+  '## 보관용 노트 형식',
+  '보고서 구조 예시: concept-review.md',
+  '보고서 구조 예시: practice-log.md'
+]) assert.ok(webBundle.includes(requiredBundleRule), `웹 실행 번들에 필수 내용이 없습니다: ${requiredBundleRule}`);
+
+for (const sourcePath of [
+  path.join(core, 'web', 'web-instructions.md'),
+  path.join(core, 'references', 'skala-curriculum-map.md'),
+  path.join(core, 'references', 'content-profiles.md'),
+  path.join(core, 'references', 'output-profiles.md'),
+  path.join(core, 'references', 'note-schema.md'),
+  ...fs.readdirSync(path.join(core, 'templates'))
+    .filter((name) => name.endsWith('.md'))
+    .sort()
+    .map((name) => path.join(core, 'templates', name))
+]) {
+  const content = fs.readFileSync(sourcePath, 'utf8').trim();
+  const marker = `<!-- source: ${path.relative(repositoryRoot, sourcePath)} sha256: ${crypto.createHash('sha256').update(content).digest('hex')} -->`;
+  assert.ok(webBundle.includes(marker), `웹 실행 번들이 원본과 동기화되지 않았습니다: ${sourcePath}`);
+}
+
 const webGuide = fs.readFileSync(path.join(webPlatform, 'README.md'), 'utf8');
 for (const platform of ['ChatGPT 웹', 'Gemini 웹', 'Claude 웹']) {
   assert.ok(webGuide.includes(platform), `웹 사용 안내에 플랫폼이 없습니다: ${platform}`);
 }
 for (const requiredScopeGuide of [
-  'GitHub 저장소 주소만 보내고',
-  'raw.githubusercontent.com',
-  '두 링크 모두 내용을 불러오지 못했습니다.',
-  '파일 전체를 복사해 붙여 넣거나 `.md` 파일로 첨부',
+  'README의 AI 실행 라우터',
+  'SKALA-REVIEW-WEB-BUNDLE.md',
+  '설치 불가 안내나 코드 리뷰 설명을 하지 않고',
+  'GitHub 내용을 읽지 못했다면',
+  '파일 전체를 복사하거나 `.md` 파일로 내려받습니다.',
+  '첨부하거나 붙여 넣은 SKALA 웹 실행 번들을 이 대화에 적용해줘.',
   '지침을 요약하거나 설명하지 말고 바로 SKALA 복습을 시작해줘.',
   '오늘 무엇을 배웠나요?',
   '일반 채팅에 지침 전체 전달',
@@ -107,12 +140,15 @@ for (const requiredGuide of [
   'ChatGPT 웹',
   'Gemini 웹',
   'Claude 웹',
-  '하나의 저장소 링크와 `해당 링크 진행해`라는 같은 문장을 모든 AI에 보내는 방식은 지원하지 않습니다.',
+  '## AI 실행 라우터',
+  '웹 AI는 로컬 Skill 설치를 시도하거나 코드 리뷰 도구로 추측하지 않는다.',
+  'platforms/web/SKALA-REVIEW-WEB-BUNDLE.md',
+  'README를 읽을 수 없는 웹 대화에서는',
   'plugins/skala-review/skills/skala-review 해당 스킬 설치해줘',
   'platforms/claude-code/skala-review 폴더를 ~/.claude/skills/skala-review에 설치해줘.',
   '현재 개발 환경에는 Claude Code 실행 파일이 없어 실제 계정 세션 테스트는 수행하지 못했습니다.',
-  'GitHub 저장소 주소만 보내고',
   '파일 전체를 복사해 붙여 넣거나 `.md` 파일로 첨부',
+  '첨부하거나 붙여 넣은 SKALA 웹 실행 번들을 이 대화에 적용해줘.',
   '지침을 요약하거나 설명하지 말고 바로 SKALA 복습을 시작해줘.',
   '오늘 무엇을 배웠나요?',
   '일반 채팅에 지침 전체 전달',
