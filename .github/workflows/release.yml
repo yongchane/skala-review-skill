@@ -1,0 +1,53 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 저장소 가져오기
+        uses: actions/checkout@v4
+
+      - name: Node.js 설정
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 버전 일치 확인
+        shell: bash
+        run: |
+          test "v$(tr -d '[:space:]' < VERSION)" = "${GITHUB_REF_NAME}"
+
+      - name: 배포본 동기화
+        run: node tools/package-skill.mjs
+
+      - name: 프로젝트 검증
+        run: node tools/validate.mjs
+
+      - name: Release 파일 만들기
+        shell: bash
+        run: |
+          mkdir -p dist
+          tar -czf "dist/skala-review-claude-code-${GITHUB_REF_NAME}.tar.gz" \
+            -C platforms/claude-code skala-review
+          tar -czf "dist/skala-review-codex-${GITHUB_REF_NAME}.tar.gz" \
+            -C platforms/codex skala-review
+          tar -czf "dist/skala-review-codex-plugin-${GITHUB_REF_NAME}.tar.gz" \
+            -C plugins skala-review
+
+      - name: GitHub Release 만들기
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" \
+            dist/*.tar.gz \
+            --generate-notes \
+            --title "SKALA Review ${GITHUB_REF_NAME}"

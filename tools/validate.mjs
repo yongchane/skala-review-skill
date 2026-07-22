@@ -12,6 +12,10 @@ const codexStandaloneSkill = path.join(repositoryRoot, 'platforms', 'codex', 'sk
 const codexPluginSkill = path.join(repositoryRoot, 'plugins', 'skala-review', 'skills', 'skala-review');
 const claudeSkill = path.join(repositoryRoot, 'platforms', 'claude-code', 'skala-review');
 const webPrompts = path.join(repositoryRoot, 'web-prompts');
+const versionFile = path.join(repositoryRoot, 'VERSION');
+const claudeInstallScript = path.join(repositoryRoot, 'tools', 'install-claude-code.sh');
+const claudeUpdateScript = path.join(repositoryRoot, 'tools', 'update-claude-code.sh');
+const releaseWorkflow = path.join(repositoryRoot, '.github', 'workflows', 'release.yml');
 
 function required(filePath) {
   assert.ok(fs.existsSync(filePath), `필수 파일이 없습니다: ${filePath}`);
@@ -33,9 +37,13 @@ for (const filePath of [
   path.join(repositoryRoot, 'CONTRIBUTING.md'),
   path.join(repositoryRoot, 'CODE_OF_CONDUCT.md'),
   path.join(repositoryRoot, 'SECURITY.md'),
+  versionFile,
   path.join(repositoryRoot, '.github', 'ISSUE_TEMPLATE', 'bug_report.yml'),
   path.join(repositoryRoot, '.github', 'ISSUE_TEMPLATE', 'feature_request.yml'),
   path.join(repositoryRoot, '.github', 'pull_request_template.md'),
+  releaseWorkflow,
+  claudeInstallScript,
+  claudeUpdateScript,
   path.join(codexStandaloneSkill, 'SKILL.md'),
   path.join(codexStandaloneSkill, 'agents', 'openai.yaml'),
   path.join(codexPluginSkill, 'SKILL.md'),
@@ -54,10 +62,26 @@ assert.ok(!fs.existsSync(path.join(repositoryRoot, 'platforms', 'codex', 'SKILL.
 assert.equal(path.basename(codexStandaloneSkill), 'skala-review', 'Codex 독립 Skill 폴더명은 메타데이터 이름과 같아야 합니다.');
 
 const plugin = JSON.parse(fs.readFileSync(path.join(repositoryRoot, 'plugins', 'skala-review', '.codex-plugin', 'plugin.json')));
+const version = fs.readFileSync(versionFile, 'utf8').trim();
+assert.match(version, /^\d+\.\d+\.\d+$/, 'VERSION은 SemVer 형식이어야 합니다.');
 assert.equal(plugin.name, 'skala-review');
 assert.equal(plugin.skills, './skills/');
-assert.match(plugin.version, /^\d+\.\d+\.\d+/);
+assert.equal(plugin.version, version, 'Plugin 버전과 VERSION이 일치해야 합니다.');
 assert.ok(plugin.interface.defaultPrompt.length <= 3, '기본 시작 문구는 최대 3개여야 합니다.');
+
+for (const script of [claudeInstallScript, claudeUpdateScript]) {
+  execFileSync('bash', ['-n', script], { stdio: 'pipe' });
+  assert.ok((fs.statSync(script).mode & 0o111) !== 0, `실행 권한이 없습니다: ${script}`);
+}
+
+const releaseText = fs.readFileSync(releaseWorkflow, 'utf8');
+includesAll(releaseText, [
+  'tags:',
+  'v*',
+  'node tools/package-skill.mjs',
+  'node tools/validate.mjs',
+  'gh release create'
+], 'GitHub Release 워크플로');
 
 const marketplace = JSON.parse(fs.readFileSync(path.join(repositoryRoot, '.agents', 'plugins', 'marketplace.json')));
 assert.ok(marketplace.plugins.some((entry) => entry.name === 'skala-review'));
@@ -200,6 +224,11 @@ includesAll(readme, [
   'GitHub Issue와 Pull Request로 개선에 참여',
   '`platforms/codex/skala-review`',
   '--path platforms/codex/skala-review',
+  'bash tools/install-claude-code.sh',
+  'tools/update-claude-code.sh',
+  '기존 Claude Code 사용자의 최초 마이그레이션',
+  '업데이트와 Release',
+  '제작자가 GitHub에 변경사항을 푸시하는 것만으로 사용자 로컬 설치본이 자동 변경되지는 않습니다.',
   '직접 설치 가능한 Codex Skill 완성본',
   '웹 프롬프트는 `web-prompts/`에서 직접 관리합니다.'
 ], 'README');

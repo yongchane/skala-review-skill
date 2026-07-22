@@ -99,26 +99,68 @@ python3 ~/.codex/skills/.system/skill-installer/scripts/install-skill-from-githu
 
 ## Claude Code 설치
 
-개인 환경 전체에서 사용하려면 다음처럼 설치합니다.
+개인 환경 전체에서 사용하려면 저장소를 내려받고 설치 스크립트를 실행합니다.
 
 ```bash
 git clone https://github.com/yongchane/skala-review-skill.git
-mkdir -p ~/.claude/skills
-cp -R skala-review-skill/platforms/claude-code/skala-review ~/.claude/skills/skala-review
+cd skala-review-skill
+bash tools/install-claude-code.sh
 ```
 
-특정 프로젝트에서만 사용하려면 프로젝트 루트의 `.claude/skills/`에 복사합니다.
+설치 스크립트는 검증된 최신 GitHub Release를 `~/.local/share/skala-review-skill`에 보관하고, `~/.claude/skills/skala-review`를 해당 배포본에 연결합니다. 기존 복사 설치본이 있으면 삭제하지 않고 날짜가 붙은 백업 폴더로 이동합니다.
+
+설치가 끝나면 Claude Code를 완전히 종료하고 새 세션에서 시작합니다.
+
+```text
+/skala-review
+```
+
+### 기존 Claude Code 사용자의 최초 마이그레이션
+
+이전 안내에 따라 Skill 폴더를 복사해 설치한 사용자는 Git 저장소에서 `git pull`만 실행해도 실제 설치 폴더가 바뀌지 않습니다. 기존에 내려받은 저장소에서 다음 명령을 한 번 실행하면 관리형 설치로 전환됩니다.
+
+```bash
+cd /path/to/skala-review-skill
+git pull --ff-only origin main
+bash tools/install-claude-code.sh
+```
+
+이후 업데이트는 다음 한 줄로 처리합니다.
+
+```bash
+bash ~/.local/share/skala-review-skill/tools/update-claude-code.sh
+```
+
+업데이트가 끝나면 Claude Code를 완전히 종료하고 다시 실행합니다. 업데이트 스크립트는 최신 Release를 적용한 뒤 프로젝트 검증을 실행하며, 검증에 실패하면 이전 커밋으로 복구합니다.
+
+특정 프로젝트에서만 사용하려면 프로젝트 루트의 `.claude/skills/`에 직접 복사할 수 있습니다. 이 방식은 자동 연결되지 않으므로 새 Release마다 다시 동기화해야 합니다.
 
 ```bash
 mkdir -p .claude/skills
 cp -R /path/to/skala-review-skill/platforms/claude-code/skala-review .claude/skills/skala-review
 ```
 
-새 Claude Code 세션에서 시작합니다.
+## 업데이트와 Release
 
-```text
-/skala-review
-```
+GitHub의 `main` 브랜치는 다음 버전을 준비하는 개발 상태일 수 있습니다. 일반 사용자의 설치·업데이트 스크립트는 `v0.6.0`과 같은 GitHub Release 태그 중 가장 최신 버전을 사용합니다.
+
+| 환경 | 업데이트 방법 |
+|---|---|
+| Codex Plugin | `codex plugin marketplace upgrade skala-review` 실행 후 새 대화 시작 |
+| Codex 직접 설치 | 최신 Release 또는 `platforms/codex/skala-review`를 다시 설치한 뒤 새 대화 시작 |
+| Claude Code 관리형 설치 | `bash ~/.local/share/skala-review-skill/tools/update-claude-code.sh` 실행 후 재시작 |
+| Claude Code 프로젝트 복사 설치 | 저장소 업데이트 후 프로젝트의 `.claude/skills/skala-review`를 다시 동기화 |
+| 웹 AI 프롬프트 | GitHub에서 최신 프롬프트 코드 블록을 다시 복사 |
+
+제작자가 GitHub에 변경사항을 푸시하는 것만으로 사용자 로컬 설치본이 자동 변경되지는 않습니다. 검증된 새 Release가 게시된 뒤 사용자가 환경에 맞는 업데이트 명령을 실행해야 합니다.
+
+새 버전은 다음 순서로 배포합니다.
+
+1. `VERSION`과 Plugin 버전을 같은 SemVer 값으로 변경합니다.
+2. `node tools/package-skill.mjs`와 `node tools/validate.mjs`를 실행합니다.
+3. 변경사항을 `main`에 반영합니다.
+4. `VERSION`과 같은 `vX.Y.Z` 태그를 푸시합니다.
+5. GitHub Actions가 Claude Code·Codex·Codex Plugin 배포 파일과 Release를 생성합니다.
 
 ## 처음 실행하면 어떻게 진행되나요?
 
