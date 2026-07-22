@@ -1,4 +1,4 @@
 interface:
   display_name: "SKALA Review"
-  short_description: "복습하고 다시 꺼내 볼 학습 노트를 만듭니다."
-  default_prompt: "정리되지 않은 오늘의 SKALA 학습 내용을 질문으로 복습하고, 나중에 다시 점검할 수 있는 Markdown 노트로 정리해줘."
+  short_description: "질문 복습부터 글·보고서 작성까지 돕습니다."
+  default_prompt: "SKALA 복습 도우미의 주요 기능을 안내하고 오늘 배운 내용을 질문으로 복습해줘."

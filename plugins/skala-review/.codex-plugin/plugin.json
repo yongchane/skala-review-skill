@@ -1,22 +1,22 @@
 {
   "name": "skala-review",
-  "version": "0.4.2",
-  "description": "SKALA 복습을 안내하고, 검색 가능한 Markdown 노트와 복사 가능한 학습 초안을 만듭니다.",
+  "version": "0.5.0",
+  "description": "SKALA 질문 복습, 빠른 요약, 복습 글·실습 보고서 작성과 Markdown 재복습을 돕습니다.",
   "author": {
     "name": "Yongchane"
   },
   "skills": "./skills/",
   "interface": {
     "displayName": "SKALA Review",
-    "shortDescription": "복습 노트와 게시용 초안을 만듭니다.",
-    "longDescription": "정리되지 않은 학습 내용으로 질문식 복습을 진행하고, 동의를 받아 검색 가능한 Markdown 노트를 저장하며, 회상 질문으로 다시 복습하고, 자동 게시 없이 복사 가능한 플랫폼별 초안을 만듭니다.",
+    "shortDescription": "복습하고 글·보고서 작성까지 이어갑니다.",
+    "longDescription": "정리되지 않은 학습 내용으로 질문식 복습과 빠른 요약을 진행하고, 플랫폼용 짧은 복습 글이나 실습 보고서 작성 방법을 제공하며, 동의를 받아 검색 가능한 Markdown 노트를 저장하고 다시 복습합니다.",
     "developerName": "Yongchane",
     "category": "Productivity",
     "capabilities": ["Interactive", "Write"],
     "defaultPrompt": [
       "SKALA 복습 시작",
-      "이 메모를 Velog용 초안으로 정리해줘.",
-      "저장한 SKALA 복습 노트를 다시 점검해줘."
+      "이 메모를 빠르게 요약하고 Velog용 짧은 초안으로 정리해줘.",
+      "이 실습 자료를 바탕으로 보고서 목차와 작성 방법을 알려줘."
     ]
   }
 }
